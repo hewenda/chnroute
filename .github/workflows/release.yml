@@ -18,7 +18,7 @@ jobs:
 
       - name: Run generator
         run: |
-          ./generate.sh
+          ./generate.sh private cn
 
       - name: Set release tag
         id: tag
