@@ -6,6 +6,7 @@ if [ "$#" -eq 0 ]; then
   exit 1
 fi
 
+
 BASE_URL="https://cdn.jsdelivr.net/gh/Loyalsoldier/geoip@release/text"
 
 for LIST_NAME in "$@"; do
