@@ -1,0 +1,36 @@
+name: Generate and Release
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 16 * * 0"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run generator
+        run: |
+          ./generate.sh
+
+      - name: Set release tag
+        id: tag
+        run: |
+          echo "tag=auto-$(date +%Y%m%d)" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.tag.outputs.tag }}
+          name: Auto Release ${{ steps.tag.outputs.tag }}
+          body: |
+            Auto-generated address-list.
+          files: |
+            *.rsc
