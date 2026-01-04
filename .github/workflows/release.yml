@@ -18,6 +18,7 @@ jobs:
 
       - name: Run generator
         run: |
+          chmod +x generate.sh
           ./generate.sh private cn
 
       - name: Set release tag
