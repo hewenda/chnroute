@@ -21,17 +21,19 @@ jobs:
           chmod +x generate.sh
           ./generate.sh private cn
 
-      - name: Set release tag
-        id: tag
+      - name: Commit and push to release branch
         run: |
-          echo "tag=auto-$(date +%Y%m%d)" >> $GITHUB_OUTPUT
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
 
-      - name: Create Release
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: ${{ steps.tag.outputs.tag }}
-          name: Auto Release ${{ steps.tag.outputs.tag }}
-          body: |
-            Auto-generated address-list.
-          files: |
-            *.rsc
+          # 创建/切换 release 分支
+          git checkout -B release
+
+          # 添加生成文件
+          git add *.rsc
+
+          # 提交，如果没有变化就跳过
+          git diff --cached --quiet || git commit -m "Auto update address lists $(date +%Y%m%d)"
+
+          # 推送到远程 release 分支
+          git push origin release --force
