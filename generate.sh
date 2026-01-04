@@ -31,7 +31,6 @@ for LIST_NAME in "$@"; do
   # ===== IPv4 =====
   if [ "${#IPV4_LIST[@]}" -gt 0 ]; then
     {
-      echo "/log info \"Loading ${LIST_NAME} IPv4 address list\""
       echo "/ip firewall address-list remove [/ip firewall address-list find list=${LIST_NAME}]"
       echo "/ip firewall address-list"
       echo ":local ipList {"
@@ -48,7 +47,6 @@ for LIST_NAME in "$@"; do
   # ===== IPv6 =====
   if [ "${#IPV6_LIST[@]}" -gt 0 ]; then
     {
-      echo "/log info \"Loading ${LIST_NAME} IPv6 address list\""
       echo "/ipv6 firewall address-list remove [/ipv6 firewall address-list find list=${LIST_NAME}]"
       echo "/ipv6 firewall address-list"
       echo ":local ipList {"
